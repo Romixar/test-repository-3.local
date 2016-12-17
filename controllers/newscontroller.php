@@ -4,12 +4,14 @@ class NewsController{
     
     public function actionAll(){// получение всех новостей
         
-		$db = new DB();
+		var_dump(
 		
-		$res = $db -> query('SELECT * FROM `news` WHERE `id` = :id',
-				[':id' => 3]);
+		News::findAll()
 		
-		var_dump($res);
+		
+		);
+		
+		
 		
 		die;
         $news = News::getAll();
