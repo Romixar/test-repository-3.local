@@ -30,6 +30,7 @@ abstract class AbstractModel{
 		$table = static::$table;// позднее статическое связывание
 		
         $sql = 'SELECT * FROM '.$table;
+		
 		$db = new DB();
 		$db -> setClassName($class);// устанавливаем имя класса в FETCH_CLASS
 		return $db -> query($sql);
@@ -43,19 +44,38 @@ abstract class AbstractModel{
 		$db = new DB();
 		//print_r($db -> query($sql, [':id' => $id]));
 		//exit;
-		return $db -> query($sql, [':id' => $id]);
+		return $db -> query($sql, [':id' => $id])[0];// чтобы вернуть объект добавить []
+		
+	}
+	
+	public static function findByColumn($column, $value){// поиск в заданной колонке заданного поля
+	
+		$sql = 'SELECT * FROM `'.static::$table.'` WHERE `'.$column.'` = :'.$column;
+		//echo $sql;exit;
+		$db = new DB();
+		
+		//print_r($db -> query($sql, [':'.$column => $value]));
+		return $db -> query($sql, [':'.$column => $value]);
+		
+		
 		
 	}
     
     public function insert(){
 		
-		$cols = array_keys($this -> data);// получаем список полей (ключи массива)
+		//$cols = array_keys($this -> data);// получаем список полей (ключи массива)
 		
 		
 		$data = [];// здесь будет тот  же массив, но измененными ключами :title => jnjb, :author => bhbh
 		
-		foreach($cols as $col){// получаем ключи и значеия в нужном формате
-			$data[':'.$col] = $this -> data[$col];
+		// foreach($cols as $col){// получаем ключи и значеия в нужном формате
+			// $data[':'.$col] = $this -> data[$col];
+		// }
+		$cols = [];// здесь будут ключи (колонки таблицы)
+		
+		foreach($this -> data as $col => $val){// получаем ключи и значеия в нужном формате
+			$cols[] = $col;
+			$data[':'.$col] = $val;
 		}
 
 		

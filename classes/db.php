@@ -15,6 +15,7 @@ class DB{
 		$this -> classname = $classname;
 	}
     
+	// $params - должен быть масив вида [:id => $id]
 	public function query($sql, $params = []){// должен вернуть результат запроса
 		
 		$sth = $this -> dbh -> prepare($sql);// создаём подготовленный запрос

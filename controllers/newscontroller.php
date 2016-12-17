@@ -4,11 +4,11 @@ class NewsController{
     
     public function actionAll(){// получение всех новостей
         
-		$article = new News();
-		$article -> title = 'Привет!';
-		$article -> author = 'Батовский РОМИЧ!';
+		// $article = new News();
+		// $article -> title = 'Сенсация!';
+		// $article -> author = 'Вася Пупкин';
 		
-		$article -> insert();
+		// $article -> insert();
 		
 		
 		
@@ -32,7 +32,15 @@ class NewsController{
         
     }
     
-    
+    public function actionFind($column, $value){// вернутся все строки с заданными значениями
+		
+		
+		$items = News::findByColumn($column, $value);
+		
+		
+		
+		
+	}
     
     
     
