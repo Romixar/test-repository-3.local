@@ -1,0 +1,13 @@
+<?php
+
+abstract class AbstractController{
+    
+    
+    
+    
+    
+    
+}
+
+
+?>
