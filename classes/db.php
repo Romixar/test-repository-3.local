@@ -2,36 +2,23 @@
 
 class DB{
     
+	private $dbh;
     
     public function __construct(){
         
-        mysql_connect(Config::DB_HOST,Config::DB_USER,Config::DB_PASS);
-        mysql_selectdb(Config::DB_NAME);
+		$this -> dbh = new PDO('mysql:dbname=test;host=localhost', 'root', '');// подключение с использ-ем PDO
         
     }
     
-    public function queryAll($sql, $class = 'stdClass'){// извлечь массив записей
-        
-        $res = mysql_query($sql);
-        
-        if($res === false) return false;
-        
-        $ret = [];// для хранения массива ответа из БД
-        
-        while($row = mysql_fetch_object($res, $class)){// сразу запаковываем в объект
-            
-            $ret[] = $row;// получается массив объектов
-            
-        }
-        return $ret;
-        
-    }
-    
-    public function queryOne($sql, $class = 'stdClass'){// извлечь одну (первую) запись
-        
-        return $this -> queryAll($sql, $class)[0];
-    }
-    
+	public function query($sql, $params = []){// должен вернуть результат запроса
+		
+		$sth = $this -> dbh -> prepare($sql);// создаём подготовленный запрос
+		$sth -> execute($params); // исполняем запрос с указанными параметравми
+		return $sth -> fetchAll(PDO::FETCH_OBJ);// получить все результаты выполнения запроса ввиде объекта
+		
+	}
+	
+	
     
 }
 
