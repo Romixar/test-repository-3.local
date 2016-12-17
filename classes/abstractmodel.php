@@ -4,12 +4,22 @@ abstract class AbstractModel{
     
     protected static $table;// название таблицы в каждом дочернем классе
     
+	protected $data = [];// здесь будут счвойства дочерних объектов (поля таблицы)
     
+	
+	public function __set($k, $v){// добавляем свойства дочернего объекта во внутр-й массив
+		// в нашем случае при вызове news создаём ему свойства
+		$this -> data[$k] = $v;
+	}
+	
+	public function __get($k){
+		return $this -> data[$k];
+	}
+	
+	
 	// public static function getTable(){// получаю таблицу БД из подчиненного кдасса
 		// return static::$table;
 	// }
-    
-    
     
     public static function findAll(){// полуаем все записи из БД -> таблицы news
         
@@ -37,7 +47,29 @@ abstract class AbstractModel{
 		
 	}
     
-    
+    public function insert(){
+		
+		$cols = array_keys($this -> data);// получаем список полей (ключи массива)
+		
+		
+		$data = [];// здесь будет тот  же массив, но измененными ключами :title => jnjb, :author => bhbh
+		
+		foreach($cols as $col){// получаем ключи и значеия в нужном формате
+			$data[':'.$col] = $this -> data[$col];
+		}
+
+		
+		$sql = 'INSERT INTO `'.static::$table.'` '.
+				'('.implode(', ',$cols).')'.
+				' VALUES'.
+				' ('.implode(',',array_keys($data)).')';// ключи из обработанного массива (с :)
+		
+		
+		
+		$db = new DB();
+		$db -> execute($sql, $data);
+		
+	}
     
     
     

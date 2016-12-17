@@ -4,25 +4,16 @@ class NewsController{
     
     public function actionAll(){// получение всех новостей
         
-		var_dump(
+		$article = new News();
+		$article -> title = 'Привет!';
+		$article -> author = 'Батовский РОМИЧ!';
 		
-		News::findAll()
-		
-		
-		);
+		$article -> insert();
 		
 		
 		
 		die;
-        $news = News::getAll();
         
-        $view = new View();
-        
-        //$view -> assign('items', $news);// плохо понятное создание свойства
-        
-        $view -> items = $news;// устанавливаем свойство напрямую (благодаря __set во View)
-		
-        $view -> display('news/all.php');
         
         
     }

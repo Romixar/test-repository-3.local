@@ -17,14 +17,18 @@ class DB{
     
 	public function query($sql, $params = []){// должен вернуть результат запроса
 		
-		//echo $sql."<br/>";
-		print_r($params);
-		
 		$sth = $this -> dbh -> prepare($sql);// создаём подготовленный запрос
 		$sth -> execute($params); // исполняем запрос с указанными параметравми
 		//return $sth -> fetchAll(PDO::FETCH_OBJ);// получить все результаты выполнения запроса ввиде объекта
 		return $sth -> fetchAll(PDO::FETCH_CLASS, $this -> classname);// получить все результаты
 		// выполнения запроса ввиде объекта нужного класса
+		
+	}
+	
+	public function execute($sql, $params = []){// ничего не будем возвращать, только true/false
+		
+		$sth = $this -> dbh -> prepare($sql);// создаём подготовленный запрос
+		return $sth -> execute($params); 
 		
 	}
 	
