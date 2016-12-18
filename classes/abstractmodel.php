@@ -85,9 +85,9 @@ abstract class AbstractModel{
 				' ('.implode(',',array_keys($data)).')';// ключи из обработанного массива (с :)
 		
 		
-		
 		$db = new DB();
-		$db -> execute($sql, $data);
+		return $db -> execute($sql, $data);
+		
 		
 	}
     

@@ -26,11 +26,11 @@ class DB{
 		
 	}
 	
-	public function execute($sql, $params = []){// ничего не будем возвращать, только true/false
+	public function execute($sql, $params = []){
 		
 		$sth = $this -> dbh -> prepare($sql);// создаём подготовленный запрос
-		return $sth -> execute($params); 
-		
+		$sth -> execute($params); 
+		return $this -> dbh->lastInsertId();// вернём ID последней вставленно записи
 	}
 	
 	

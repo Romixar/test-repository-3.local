@@ -4,12 +4,8 @@ class NewsController{
     
     public function actionAll(){// получение всех новостей
         
-		// $article = new News();
-		// $article -> title = 'Сенсация!';
-		// $article -> author = 'Вася Пупкин';
 		
-		// $article -> insert();
-		
+		$this -> actionAdd();
 		
 		
 		die;
@@ -21,7 +17,7 @@ class NewsController{
     public function actionOne(){// получение одной новости
         
         $id = $_GET['id'];
-        $item = News::getOne($id);
+        $item = News::findOne($id);
         
         $view = new View();
         
@@ -41,6 +37,15 @@ class NewsController{
 		
 		
 	}
+    
+    public function actionAdd(){
+         $article = new News();
+		 $article -> title = 'Супер новость сенсация!';
+		 $article -> author = 'РОМАРИО';
+		
+        $id = $article -> insert();
+        echo 'Создана запись с ID = '.$id;
+    }
     
     
     
