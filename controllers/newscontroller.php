@@ -3,14 +3,14 @@
 class NewsController{
     
     public function actionAll(){// получение всех новостей
-        $article = new News();
-		 $article -> title = 'Супер новость XXXXXX!';
-		 $article -> author = 'РОМАРИО_XXX';
+        // $article = new News();
+		 // $article -> title = 'Супер новость XXXXXX!';
+		 // $article -> author = 'РОМАРИО_XXX';
 		
-        $article -> update(5);
+        // $article -> update(5);
 		
 		//$this -> actionAdd();
-		
+		var_dump($this -> actionFind('title','Новость 1'));
 		
 		die;
         
@@ -35,7 +35,7 @@ class NewsController{
     public function actionFind($column, $value){// вернутся все строки с заданными значениями
 		
 		
-		$items = News::findByColumn($column, $value);
+		return News::findByColumn($column, $value);
 		
 		
 		

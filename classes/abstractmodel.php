@@ -16,6 +16,9 @@ abstract class AbstractModel{
 		return $this -> data[$k];
 	}
 	
+	public function __isset($key){// проверка на существование свойства
+		return isset($this -> data[$key]);// это делается перед сохранением в БД
+	}
 	
 	// public static function getTable(){// получаю таблицу БД из подчиненного кдасса
 		// return static::$table;
@@ -49,14 +52,16 @@ abstract class AbstractModel{
 	}
 	
 	public static function findByColumn($column, $value){// поиск в заданной колонке заданного поля
+		
+		$db = new DB();
+		$db -> setClassName(get_called_class());// устанавливаем имя класса в FETCH_CLASS
 	
 		$sql = 'SELECT * FROM `'.static::$table.'` WHERE `'.$column.'` = :'.$column;
-		//echo $sql;exit;
-		$db = new DB();
-		
-		//print_r($db -> query($sql, [':'.$column => $value]));
-		return $db -> query($sql, [':'.$column => $value]);
-		
+		$res = $db -> query($sql, [':'.$column => $value]);
+		if(!empty($res)){
+			return $res[0];
+		}
+		return false;
 		
 		
 	}
