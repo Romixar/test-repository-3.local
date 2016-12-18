@@ -4,13 +4,7 @@ class NewsController{
     
     public function actionAll(){// получение всех новостей
 		
-		try{// отлов исключения
-			$art = News::findByColumn('title', 'Новость 2');
-		}catch(ModelException $e){
-			
-			die('Что-то пошло не так... :(');
-			
-		}
+		$art = News::findByColumn('title', 'Новость 2');
 		
 		
 		

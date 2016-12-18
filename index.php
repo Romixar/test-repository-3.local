@@ -11,10 +11,21 @@ $controller = new $controllerClassName;// создание объекта кла
 
 $method = 'action'.$act;// составляем название метода
 
-$controller -> $method();// запускаем сотавленный метод объекта класса контроллер
 
-// данные контроллеры можно добавлять не ограниченно!
+try{// отлов ошибки на самом верхнеми уровне
 
+	$controller -> $method();// запускаем сотавленный метод объекта класса контроллер
+	
+}catch(Exception $e){
+	
+	$view = new View();
+	
+	$view -> error = $e -> getMessage();
+	
+	$view -> display('error.php');
+	
+	
+}
 
 
 

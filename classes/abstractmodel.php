@@ -59,11 +59,12 @@ abstract class AbstractModel{
 		$sql = 'SELECT * FROM `'.static::$table.'` WHERE `'.$column.'` = :'.$column;
 		$res = $db -> query($sql, [':'.$column => $value]);
 		
-		if(empty($res)){
+		if(empty($res)){// отлавливать нужно в более верхнем уровне (в index.php)
 		
-			$e = new ModelException();// создаем объект исключения
-			throw $e;// всплытие исключения
-				
+			// $e = new ModelException();// создаем объект исключения
+			// throw $e;// всплытие исключения
+			
+			throw new ModelException('Ничего не найдено в базе!');// вброс исключения сокращенный (можно передавать сообщения)
 		}
 		
 		
