@@ -2,8 +2,16 @@
 
 require_once __DIR__.'/function.php';
 
-$ctrl = isset($_GET['ctrl']) ? $_GET['ctrl'] : 'News';// контроллер получаем (по умолчанию News)
-$act = isset($_GET['act']) ? $_GET['act'] : 'All';// метод контроллера получаем (по умолчанию All)
+
+$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);// получить путь без GET параметров
+
+$path_parts = explode('/',$path);
+
+
+// создаем ЧПУ
+
+$ctrl = !empty($path_parts[1]) ? $path_parts[1] : 'News';// контроллер получаем (по умолчанию News)
+$act = !empty($path_parts[2]) ? $path_parts[2] : 'All';// метод контроллера получаем (по умолчанию All)
 
 $controllerClassName = $ctrl.'Controller';// состаляем название класса
 

@@ -1,2 +1,16 @@
-DefaultLanguage ru
-AddDefaultCharset utf-8
+# Включить движок преобразования адресов
+
+RewriteEngine On
+
+# остальные GET параметры не учитывать
+
+#RewriteRule (^[a-zA-Z]+)\/(^[a-zA-Z]+) index.php?ctrl=$1&act=$2 [QSA]
+
+RewriteBase /
+
+RewriteRule ^(.*)$ index.php
+
+
+
+#DefaultLanguage ru
+#AddDefaultCharset utf-8
