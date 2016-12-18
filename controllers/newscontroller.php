@@ -3,11 +3,13 @@
 class NewsController{
     
     public function actionAll(){// получение всех новостей
-        $article = News::findByColumn('title', 'Новость 1');// находим новость
+        //$article = News::findByColumn('title', 'Новость 2');// находим новость
 		
-		$article -> title = 'Новость 1 ОБНОВЛЕНА!!!';// добавляем ей свойство
+		$article = new News();
 		
-        $article -> update();//  обновляем
+		$article -> title = 'Новость НОВАЯ!!!';// добавляем ей свойство
+		
+        $article -> save();//  обновляем
 		
 		var_dump($article -> id);
 		

@@ -66,7 +66,7 @@ abstract class AbstractModel{
 		
 	}
     
-    public function insert(){
+    protected function insert(){
 		
 		$data = [];// здесь будет тот  же массив, но измененными ключами :title => jnjb, :author => bhbh
 
@@ -94,7 +94,7 @@ abstract class AbstractModel{
 	
 	
 	
-	public function update(){
+	protected function update(){
 		$cols = [];
 		$data = [];
 		
@@ -115,7 +115,20 @@ abstract class AbstractModel{
 		return $db -> execute($sql, $data);
 	}
     
-    
+    public function save(){// сохраняет либо обновляет
+		
+		if(!isset($this -> id)){
+			
+			$this -> insert();
+			
+		}else{
+			
+			$this -> update();
+			
+		}
+		
+		
+	}
     
     
     
