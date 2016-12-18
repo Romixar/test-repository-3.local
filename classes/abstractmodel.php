@@ -58,6 +58,16 @@ abstract class AbstractModel{
 	
 		$sql = 'SELECT * FROM `'.static::$table.'` WHERE `'.$column.'` = :'.$column;
 		$res = $db -> query($sql, [':'.$column => $value]);
+		
+		if(empty($res)){
+		
+			$e = new ModelException();// создаем объект исключения
+			throw $e;// всплытие исключения
+				
+		}
+		
+		
+		
 		if(!empty($res)){
 			return $res[0];
 		}
