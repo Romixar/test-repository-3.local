@@ -3,9 +3,13 @@
 class NewsController{
     
     public function actionAll(){// получение всех новостей
-        
+        $article = new News();
+		 $article -> title = 'Супер новость XXXXXX!';
+		 $article -> author = 'РОМАРИО_XXX';
 		
-		$this -> actionAdd();
+        $article -> update(5);
+		
+		//$this -> actionAdd();
 		
 		
 		die;
@@ -45,6 +49,8 @@ class NewsController{
 		
         $id = $article -> insert();
         echo 'Создана запись с ID = '.$id;
+		
+		if($id) $article -> id = $id;
     }
     
     
