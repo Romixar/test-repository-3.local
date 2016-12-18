@@ -29,8 +29,12 @@ class DB{
 	public function execute($sql, $params = []){
 		
 		$sth = $this -> dbh -> prepare($sql);// создаём подготовленный запрос
-		$sth -> execute($params); 
-		return $this -> dbh->lastInsertId();// вернём ID последней вставленно записи
+		
+		return $sth -> execute($params); 
+	}
+	
+	public function lastInsertId(){// вернём ID последней вставленно записи
+		return $this -> dbh -> lastInsertId();// вернём ID последней вставленно записи
 	}
 	
 	

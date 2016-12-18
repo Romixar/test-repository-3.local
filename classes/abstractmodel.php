@@ -68,14 +68,8 @@ abstract class AbstractModel{
     
     public function insert(){
 		
-		//$cols = array_keys($this -> data);// получаем список полей (ключи массива)
-		
-		
 		$data = [];// здесь будет тот  же массив, но измененными ключами :title => jnjb, :author => bhbh
-		
-		// foreach($cols as $col){// получаем ключи и значеия в нужном формате
-			// $data[':'.$col] = $this -> data[$col];
-		// }
+
 		$cols = [];// здесь будут ключи (колонки таблицы)
 		
 		foreach($this -> data as $col => $val){// получаем ключи и значеия в нужном формате
@@ -91,27 +85,32 @@ abstract class AbstractModel{
 		
 		
 		$db = new DB();
-		return $db -> execute($sql, $data);
+		$db -> execute($sql, $data);
+		return $db -> lastInsertID();// вернеи последний вставленный ID
 			
 	}
 	
-	public function update($id){
-		$data = [];// здесь будет тот  же массив, но измененными ключами :title => jnjb, :author => bhbh
+	// задание на https://docviewer.yandex.ru/?url=ya-disk-public%3A%2F%2FQVlkCet6NPYX1Kznq4baV3tVhSdC7O4KIQ9ere%2Fq7ro%3D&archive-path=%2F%2Freadme.txt&name=PHP%20%D0%A3%D1%80%D0%BE%D0%B2%D0%B5%D0%BD%D1%8C%202.%20%D0%A3%D1%80%D0%BE%D0%BA%205.zip%2F%2Freadme.txt&c=585606417097
+	
+	
+	
+	public function update(){
+		$cols = [];
+		$data = [];
 		
-		//$cols = [];// здесь будут ключи (колонки таблицы)
-		
-		// foreach($this -> data as $col => $val){// получаем ключи и значеия в нужном формате
-			// $cols[] = $col;
-			// $data[':'.$col] = $val;
-		// }
+		foreach($this -> data as $k => $v){// получаем ключи и значеия в нужном формате
+			$data[':'.$k] = $v;// собираем массив для подстановки :id = $id
+			if($k == 'id') continue;// пропуск итерации, если есть id
+			$cols[] = '`'.$k.'` = :'.$k;// создаем title = :title и т.д.
+			
+		}
+
 
 		$sql = 'UPDATE `'.static::$table.'` SET '.
-				'`title` = '.$this -> data['title'].', `author` = '.$this -> data['author'].
-				' WHERE `id` = '.$id;
+				''.implode(', ',$cols).
+				' WHERE `id` = :id';
 		
-		// задание на https://docviewer.yandex.ru/?url=ya-disk-public%3A%2F%2FQVlkCet6NPYX1Kznq4baV3tVhSdC7O4KIQ9ere%2Fq7ro%3D&archive-path=%2F%2Freadme.txt&name=PHP%20%D0%A3%D1%80%D0%BE%D0%B2%D0%B5%D0%BD%D1%8C%202.%20%D0%A3%D1%80%D0%BE%D0%BA%205.zip%2F%2Freadme.txt&c=585606417097
-		
-		echo $sql;die;
+
 		$db = new DB();
 		return $db -> execute($sql, $data);
 	}
